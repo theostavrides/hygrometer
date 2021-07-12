@@ -1,8 +1,9 @@
+require('dotenv').config()
 const db = require('./db')
 const c = require('./constants')
 
 const arduino = require('./modules/arduino')({
-	serialPortPath: '/dev/tty.usbmodem141101',
+	serialPortPath: process.env.SERIAL_PORT_PATH,
 	delimiter: '\n',
 })
 
