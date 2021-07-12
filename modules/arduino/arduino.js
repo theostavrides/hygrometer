@@ -5,7 +5,6 @@ const util = require('../../util')
 
 class Arduino {
 	constructor({ serialPortPath, delimiter }){
-		SerialPort.list().then(p => console.log(p))
 		this.port = new SerialPort(serialPortPath, { baudRate: 9600 })
 		this.parser = this.port.pipe(new Readline({ delimiter }))
 		this.listeners = {}
@@ -55,3 +54,4 @@ module.exports = (config) => {
 }
 
 
+// SerialPort.list().then(p => console.log(p))
