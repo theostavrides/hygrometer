@@ -3,14 +3,31 @@ const Readline = require('@serialport/parser-readline')
 const c = require('../../constants')
 const util = require('../../util')
 
+const delimiter = '\n'
+const baudRate = 9600
+
 class Arduino {
-	constructor({ serialPortPath, delimiter }){
-		this.port = new SerialPort(serialPortPath, { baudRate: 9600 })
-		this.parser = this.port.pipe(new Readline({ delimiter }))
+	constructor(){
 		this.listeners = {}
+		this.init()
+	}
+
+	async init(){
+		const ports = await SerialPort.list()
+		
+		const arduinoPort = ports.find(p => {
+			return p.manufacturer?.includes('Arduino')
+		})
+
+		if (!arduinoPort) {
+			throw new Error('Could not detect arduino, are you sure it is plugged in?')
+		}
+
+		this.port = new SerialPort(arduinoPort.path, { baudRate })
+		this.parser = this.port.pipe(new Readline({ delimiter }))
 
 		this.startParser()
-	}
+	}	
 
 	on(event, cb){
 		const cbArray = this.listeners[event]
