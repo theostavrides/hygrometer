@@ -33,7 +33,7 @@ const createTemperatureHumidityMeasurement = async ({ humidity, temperature }) =
 		})	
 	} else {
 		const doc = bucket.docs[0].ref
-		console.log(doc)
+
 		doc.update({
 			measurements: fba.firestore.FieldValue.arrayUnion(measurement)
 		})
