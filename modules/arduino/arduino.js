@@ -59,8 +59,8 @@ class Arduino {
 				const { type } = msg
 				const callbacks = this.listeners[type] || []
 				callbacks.forEach(cb => cb(msg))
-			} catch (e) {
-				console.log(`Error parsing serial data from arduino: ${e}`)
+			} catch (error) {
+				console.log(`Error parsing serial data from arduino: ${error}`)
 			}
 		});		
 	}
