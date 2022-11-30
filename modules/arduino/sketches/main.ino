@@ -1,5 +1,5 @@
 #include "DHT.h"
-#include <ArduinoJson.h>
+#include "ArduinoJson.h"
 #define DHTPIN 2     // Digital pin connected to the DHT sensor
 #define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 
@@ -11,7 +11,7 @@ void setup() {
 }
 
 void loop() {
-  delay(5 * 60 * 1000); // Once per 5 min
+  delay(360000); // Once per 6 min
 
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
