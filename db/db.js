@@ -1,4 +1,4 @@
-const db = require('better-sqlite3')('./db.db');
+const db = require('better-sqlite3')('db.db');
 const constants = require('../constants.js')
 
 function saveMeasurement(measurement) {
