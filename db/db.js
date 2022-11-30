@@ -2,6 +2,7 @@ const db = require('better-sqlite3')('./db.db');
 const constants = require('../constants.js')
 
 function saveMeasurement(measurement) {
+    console.log(measurement)
     const insert = db.prepare(`
         INSERT INTO measurements (sensor, temperature, humidity) 
         VALUES (@sensor, @temperature , @humidity)
