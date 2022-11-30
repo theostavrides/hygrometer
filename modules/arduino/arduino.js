@@ -15,7 +15,6 @@ class Arduino {
 		const ports = await SerialPort.list()
 		
 		const arduinoPort = ports.find(p => {
-			console.log(p)
 			return p.manufacturer?.includes('Arduino')
 		})
 
@@ -54,7 +53,6 @@ class Arduino {
 
 	startParser(){
 		this.parser.on('data', data => {
-			console.log(data)
 			try {
 				const msg = JSON.parse(data)
 				const { type } = msg
