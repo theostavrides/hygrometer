@@ -4,7 +4,7 @@ const { saveMeasurement } = require('./db/db.js')
 
 const handleTempertureHumidityMeasurement = async measurement => {
 	try {
-		saveMeasurement(measurement)
+		saveMeasurement({ ...measurement, timestamp: Date.now() })
 	} catch (error) {
 		console.log(error)
 	}

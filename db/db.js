@@ -3,8 +3,8 @@ const constants = require('../constants.js')
 
 function saveMeasurement(measurement) {
     const insert = db.prepare(`
-        INSERT INTO measurements (sensor, temperature, humidity) 
-        VALUES (@sensor, @temperature , @humidity)
+        INSERT INTO measurements (sensor, temperature, humidity, timestamp) 
+        VALUES (@sensor, @temperature , @humidity, @timestamp)
     `);
 
     insert.run(measurement)
