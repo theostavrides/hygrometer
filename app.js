@@ -1,10 +1,10 @@
 const constants = require('./constants')
 const arduino = require('./modules/arduino')()
+const { saveMeasurement } = require('./db/db.js')
 
 const handleTempertureHumidityMeasurement = async measurement => {
 	try {
-		console.log(measurement)
-		// return await createSensorReading(constants.AM2302_DHT22, measurement)
+		saveMeasurement(measurement)
 	} catch (error) {
 		console.log(error)
 	}
