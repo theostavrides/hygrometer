@@ -15,6 +15,7 @@ class Arduino {
 		const ports = await SerialPort.list()
 		
 		const arduinoPort = ports.find(p => {
+			console.log(p)
 			return p.manufacturer?.includes('Arduino')
 		})
 
@@ -69,6 +70,3 @@ class Arduino {
 module.exports = (config) => {
 	return new Arduino(config)
 }
-
-
-// SerialPort.list().then(p => console.log(p))
