@@ -53,7 +53,6 @@ class Arduino {
 
 	startParser(){
 		this.parser.on('data', data => {
-			console.log(data)
 			try {
 				const msg = JSON.parse(data)
 				const { type } = msg
