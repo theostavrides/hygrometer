@@ -24,13 +24,8 @@ ChartJS.register(
 export const options = {
     responsive: true,
     plugins: {
-        legend: {
-            position: 'top' as const,
-        },
-        title: {
-            display: true,
-            text: 'Chart.js Line Chart',
-        },
+        legend: { position: 'top' as const },
+        title: { display: true, text: 'Temperature Chart' },
     },
 };
   
@@ -56,6 +51,7 @@ const TempChart: React.FC<IProps> = ({ measurements }) => {
             },
         ],
     };
+    
     return <Line options={options} data={data} />
 }
 
