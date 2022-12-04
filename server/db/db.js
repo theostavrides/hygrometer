@@ -16,7 +16,7 @@ function getMeasurements({ from = 0, to = Date.now() }) {
         AND timestamp <= @to
     `);
 
-    return q.get({ from, to })
+    return q.all({ from, to })
 }
 
 module.exports = {

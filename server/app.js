@@ -30,6 +30,7 @@ const initArduino = async() => {
 initArduino()
 
 // -------------------- Routes ----------------------
+
 app.get('/measurements', (req, res) => {
 	const measurements = db.getMeasurements({})
 	res.json(measurements)
