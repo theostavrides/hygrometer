@@ -8,7 +8,6 @@ const baudRate = 9600
 class Arduino {
 	constructor(){
 		this.listeners = {}
-		this.init()
 	}
 
 	async init(){
@@ -65,9 +64,6 @@ class Arduino {
 	}
 }	
 
-module.exports = (config) => {
-	return new Arduino(config)
+module.exports = { 
+	Arduino 
 }
-
-
-// SerialPort.list().then(p => console.log(p))

@@ -1,13 +1,38 @@
 const constants = require('./constants')
-const arduino = require('./modules/arduino')()
-const { saveMeasurement } = require('./db/db.js')
+const express = require('express')
+const app = express()
+const port = constants.EXPRESS_PORT
+const db = require('./db/db.js')
+const { Arduino } = require('./modules/arduino')
 
-const handleTempertureHumidityMeasurement = async measurement => {
+// ------------------- Arduino ---------------------
+
+const initArduino = async() => {	
 	try {
-		saveMeasurement({ ...measurement, timestamp: Date.now() })
-	} catch (error) {
-		console.log(error)
+		const arduino = new Arduino()
+		
+		await arduino.init()
+		
+		const handleTempertureHumidityMeasurement = async measurement => {
+			try {
+				db.saveMeasurement({ ...measurement, timestamp: Date.now() })
+			} catch (error) {
+				console.log(error)
+			}
+		}
+		
+		arduino.on(constants.TEMPERTURE_HUMUDITY_MEASUREMENT, handleTempertureHumidityMeasurement)
+	} catch(e) {
+		console.log(e)
 	}
 }
 
-arduino.on(constants.TEMPERTURE_HUMUDITY_MEASUREMENT, handleTempertureHumidityMeasurement)
+initArduino()
+
+// -------------------- Routes ----------------------
+app.get('/measurements', (req, res) => {
+	const measurements = db.getMeasurements({})
+	res.json(measurements)
+})
+  
+app.listen(port, () => { console.log(`App listening on port ${port}`) })
