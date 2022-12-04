@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import TempChart from '../components/TempChart';
+import Charts from '../components/Charts';
 import { IMeasurement } from '../interfaces/IMeasurement'
 
 interface IProps {  
@@ -15,7 +15,7 @@ const Home: React.FC<IProps> = ({ measurements }) => {
       </Head>
 
       <main>
-        <TempChart measurements={measurements}/>
+        <Charts measurements={measurements}/>
       </main>
     </div>
   )
