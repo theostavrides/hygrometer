@@ -1,76 +1,47 @@
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { IMeasurement } from '../interfaces/IMeasurement';
-  
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip);
 
-export const tempOptions = {
-    responsive: true,
-    plugins: {
-        title: { display: true, text: 'Temperature Chart' },
-    },
-};
-  
-export const humidityOptions = {
-    responsive: true,
-    plugins: {
-        title: { display: true, text: 'Humidity Chart' },
-    },
-};
-  
-
-interface IProps {
-    measurements: IMeasurement[];
+interface IGetChart {
+    title: string;
+    values: number[];
 }
 
-const Charts: React.FC<IProps> = ({ measurements }) => {
-    const labels = measurements.map((m, i) => {
-        const d = new Date(m.timestamp)
+const getChart = ({ title, values } : IGetChart) => {
+    const labels = values.map((val, i) => {
+        const d = new Date(val)
         return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`
     });
-      
-    const tempData = {
+    
+    const options = {
+        responsive: true,
+        plugins: {
+            title: { display: true, text: title }
+        }
+    }
+
+    const data = {
         labels,
         datasets: [
             {
-                data: measurements.map(m => m.temperature),
+                data: values,
                 borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
+                backgroundColor: 'rgba(53, 162, 235, 0.5)'
+            }
+        ]
+    }
 
-    const humidityData = {
-        labels,
-        datasets: [
-            {
-                data: measurements.map(m => m.humidity),
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
+    return <Line options={options} data={data} />
+}
 
+interface IProps { measurements: IMeasurement[]; }
+
+const Charts: React.FC<IProps> = ({ measurements }) => {
     return (
         <div>
-            <Line options={tempOptions} data={tempData} />
-            <Line options={humidityOptions} data={humidityData} />
+            {getChart({ title: 'Temperature Chart', values: measurements.map(m => m.temperature) })}
+            {getChart({ title: 'Humidity Chart', values: measurements.map(m => m.humidity) })}
         </div>
     )
 }
