@@ -32,7 +32,9 @@ initArduino()
 // -------------------- Routes ----------------------
 
 app.get('/measurements', (req, res) => {
-	const measurements = db.getMeasurements({})
+	const now = Date.now()
+	const oneWeekAgo = now - (1000 * 60 * 60 * 24 * 7)
+	const measurements = db.getMeasurements({ from: oneWeekAgo, to: now })
 	res.json(measurements)
 })
   
