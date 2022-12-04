@@ -4,20 +4,20 @@ import { IMeasurement } from '../interfaces/IMeasurement';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip);
 
 interface IGetChart {
-    title: string;
-    values: number[];
+    type: 'temperature'|'humidity';
+    measurements: IMeasurement[];
 }
 
-const getChart = ({ title, values } : IGetChart) => {
-    const labels = values.map((val, i) => {
-        const d = new Date(val)
+const getChart = ({ type, measurements } : IGetChart) => {
+    const labels = measurements.map((m) => {
+        const d = new Date(m.timestamp)
         return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`
     });
     
     const options = {
         responsive: true,
         plugins: {
-            title: { display: true, text: title }
+            title: { display: true, text: `${type}` }
         }
     }
 
@@ -25,7 +25,7 @@ const getChart = ({ title, values } : IGetChart) => {
         labels,
         datasets: [
             {
-                data: values,
+                data: measurements.map(m => m[type]),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)'
             }
@@ -40,8 +40,8 @@ interface IProps { measurements: IMeasurement[]; }
 const Charts: React.FC<IProps> = ({ measurements }) => {
     return (
         <div>
-            {getChart({ title: 'Temperature Chart', values: measurements.map(m => m.temperature) })}
-            {getChart({ title: 'Humidity Chart', values: measurements.map(m => m.humidity) })}
+            {getChart({ type: 'temperature', measurements })}
+            {getChart({ type: 'humidity', measurements })}
         </div>
     )
 }
